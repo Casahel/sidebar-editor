@@ -1,0 +1,57 @@
+[
+    {
+        "name": "Homepage",
+        "datatut": "reactour__sidenav__homepage",
+        "icon": "home",
+        "path": "/grants/GrantsHome",
+        "children": [
+            {
+                "name": "Executive summaries",
+                "icon": "spellcheck",
+                "path": "/grants/ValidatedApplicationsList_AC",
+                "auth": "authRoles.allocationCommittee"
+            },
+            {
+                "name": "Meetings",
+                "icon": "groups",
+                "path": "/grants/AllocationCommitteeMeetings",
+                "auth": "authRoles.allocationCommittee"
+            }
+        ]
+    },
+    {
+        "name": "Organization Details",
+        "datatut": "reactour__sidenav__organization",
+        "icon": "domain",
+        "auth": "authRoles.grantee",
+        "path": "/grants/OrganisationDetails",
+        "functionPermissions": "[({ user, organization}) =>{if (organization && organization.id){return true}return false}]"
+    },
+    {
+        "name": "Manage Users",
+        "icon": "people-alt",
+        "path": "/grants/ManageOrganizationMembers",
+        "auth": "authRoles.grantee",
+        "functionPermissions": "[({ user, organization}) =>{console.log('checkAuth function manage', organization, user) if (user && organization && organization.members){console.log('checkAuth function', organization.members) return (whatRole(user.userId, organization.members) === accountRoles.MANAGER.apiName)}return false}]"
+    },
+        {
+        "name": "External Reviewer",
+        "icon": "gavel",
+        "env": "chtcEnvs",
+        "auth": "authRoles.reviewer",
+        "children": [
+            {
+                "name": "Reviewer Profile",
+                "path": "/grants/AboutMe",
+                "icon": "account_circle",
+                "auth": "authRoles.reviewer"
+            },
+            {
+                "name": "Assigned Reviews",
+                "path": "/grants/AssignedOpportunities",
+                "auth": "authRoles.reviewer",
+                "icon": "fact_check"
+            }
+        ]
+    }
+]
