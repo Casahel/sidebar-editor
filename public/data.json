@@ -1,0 +1,251 @@
+[
+    {
+        "name": "Homepage",
+        "datatut": "reactour__sidenav__homepage",
+        "icon": "home",
+        "path": "/grants/GrantsHome"
+    },
+    {
+        "name": "Organization Details",
+        "datatut": "reactour__sidenav__organization",
+        "icon": "domain",
+        "auth": "authRoles.grantee",
+        "path": "/grants/OrganisationDetails",
+        "functionPermissions": "[({ user, organization}) =>{if (organization && organization.id){return true}return false}]"
+    },
+    {
+        "name": "Manage Users",
+        "icon": "people-alt",
+        "path": "/grants/ManageOrganizationMembers",
+        "auth": "authRoles.grantee",
+        "functionPermissions": "[({ user, organization}) =>{console.log('checkAuth function manage', organization, user) if (user && organization && organization.members){console.log('checkAuth function', organization.members) return (whatRole(user.userId, organization.members) === accountRoles.MANAGER.apiName)}return false}]"
+    },
+    {
+        "name": "Application List",
+        "datatut": "reactour__sidenav__applicationlist",
+        "icon": "list",
+        "path": "/grants/ApplicationsList",
+        "auth": "authRoles.grantee"
+    },
+    {
+        "name": "Reports",
+        "path": "/grants/Reports",
+        "icon": "description",
+        "auth": "authRoles.grantee"
+    },
+    {
+        "name": "Self Assessment Tool",
+        "path": "/surveys/SelfAssessmentSurveys",
+        "env": "chtcEnvs",
+        "icon": "assignment-outlined",
+        "auth": "authRoles.grantee"
+    },
+    {
+        "name": "Environmental - Self Assessment Tool",
+        "path": "/surveys/ESAT",
+        "env": "chtcEnvs",
+        "icon": "nature_people",
+        "auth": "authRoles.grantee"
+    },
+    {
+        "name": "Action Plan",
+        "path": "/grants/ActionPlan",
+        "env": "chtcEnvs",
+        "icon": "pending_actions",
+        "auth": "authRoles.grantee"
+    },
+    {
+        "name": "Calendar",
+        "icon": "calendar_today",
+        "env": "chtcEnvs",
+        "path": "/grants/Calendar",
+        "auth": "authRoles.grantee"
+    },
+    {
+        "name": "Technical Advisories",
+        "icon": "list",
+        "env": "icceEnvs",
+        "path": "/grants/TechnicalAdvisories",
+        "auth": "authRoles.technicalAdvisory"
+    },
+    {
+        "name": "Technical Advisory Ranking",
+        "icon": "list",
+        "env": "icceEnvs",
+        "path": "/internal/TechnicalAdvisoryRanking",
+        "auth": "authRoles.pm"
+    },
+    {
+        "name": "Allocation Committee",
+        "icon": "spellcheck",
+        "env": "chtcEnvs",
+        "auth": "authRoles.allocationCommittee",
+        "children": [
+            {
+                "name": "Executive summaries",
+                "icon": "spellcheck",
+                "path": "/grants/ValidatedApplicationsList_AC",
+                "auth": "authRoles.allocationCommittee"
+            },
+            {
+                "name": "Meetings",
+                "icon": "groups",
+                "path": "/grants/AllocationCommitteeMeetings",
+                "auth": "authRoles.allocationCommittee"
+            }
+        ]
+    },
+    {
+        "name": "Board Committee",
+        "icon": "spellcheck",
+        "env": "chtcEnvs",
+        "path": "/grants/ValidatedApplicationsList_Board",
+        "auth": "authRoles.board"
+    },
+    {
+        "name": "CMHC Committee",
+        "icon": "spellcheck",
+        "env": "chtcEnvs",
+        "path": "/grants/ValidatedApplicationsList_CMHC",
+        "auth": "authRoles.cmhc"
+    },
+    {
+        "name": "Grantee",
+        "icon": "account_circle",
+        "env": "chtcEnvs",
+        "auth": "authRoles.admin"
+    },
+    {
+        "name": "Become an External Reviewer",
+        "path": "/grants/ApplyToExternalReview",
+        "icon": "fact_check",
+        "env": "chtcEnvs",
+        "auth": "authRoles.grantee",
+        "noAuth": "authRoles.reviewer"
+    },
+    {
+        "name": "External Reviewer",
+        "icon": "gavel",
+        "env": "chtcEnvs",
+        "auth": "authRoles.reviewer",
+        "children": [
+            {
+                "name": "Reviewer Profile",
+                "path": "/grants/AboutMe",
+                "icon": "account_circle",
+                "auth": "authRoles.reviewer"
+            },
+            {
+                "name": "Assigned Reviews",
+                "path": "/grants/AssignedOpportunities",
+                "auth": "authRoles.reviewer",
+                "icon": "fact_check"
+            }
+        ]
+    },
+    {
+        "name": "Surveys",
+        "path": "/surveys/SurveyList",
+        "icon": "description",
+        "env": "chtcEnvs",
+        "auth": "authRoles.tester"
+    },
+    {
+        "name": "Program manager",
+        "icon": "groups",
+        "auth": "authRoles.pm",
+        "env": "internalEnvs",
+        "children": [
+            {
+                "name": "Applications list",
+                "icon": "fact_check",
+                "path": "/internal/ProgramManagerApplicationList",
+                "auth": "authRoles.pm",
+                "env": "internalEnvs"
+            },
+            {
+                "name": "Export Surveys Results",
+                "path": "/internal/ExportSurveys",
+                "icon": "file_copy",
+                "auth": "authRoles.pm",
+                "env": "internalEnvs"
+            }
+        ]
+    },
+    {
+        "name": "Administrator",
+        "icon": "school",
+        "auth": "authRoles.admin",
+        "children": [
+            {
+                "name": "Help",
+                "icon": "help",
+                "path": "/internal/InternalHelp",
+                "auth": "authRoles.admin"
+            },
+            {
+                "name": "Configure Application Types",
+                "path": "/internal/ConfigureApplicationTypes",
+                "auth": "authRoles.admin",
+                "env": "internalEnvs",
+                "iconText": "T"
+            },
+            {
+                "name": "Forms",
+                "path": "/internal/Forms",
+                "icon": "note_add",
+                "auth": "authRoles.pm"
+            },
+            {
+                "name": "Template Editor",
+                "icon": "editor",
+                "path": "/surveys/SurveyTemplates",
+                "auth": "authRoles.editor"
+            },
+            {
+                "name": "Score Cards Editor",
+                "icon": "bar_chart",
+                "path": "/surveys/ScoreCards"
+            },
+            {
+                "name": "Variables",
+                "path": "/grants/Variables",
+                "auth": "authRoles.admin",
+                "iconText": "V"
+            },
+            {
+                "name": "Export/Import",
+                "path": "/internal/ExportImportObjects",
+                "env": "chtcEnvs",
+                "auth": "authRoles.admin",
+                "iconText": "E"
+            },
+            {
+                "name": "Portal Translations",
+                "path": "/internal/TranslationsEditor",
+                "auth": "authRoles.admin",
+                "icon": "language"
+            },
+            {
+                "name": "Action Templates",
+                "env": "chtcEnvs",
+                "icon": "note_add",
+                "path": "/grants/ActionTemplates",
+                "auth": "authRoles.editor"
+            },
+            {
+                "name": "Service Inventory",
+                "env": "chtcEnvs",
+                "icon": "build",
+                "path": "/grants/ServiceInventory",
+                "auth": "authRoles.admin"
+            },
+            {
+                "name": "Navigation Bar",
+                "icon": "build",
+                "path": "/configuration/Navigation",
+                "auth": "authRoles.editor"
+            }
+        ]
+    }
+]
