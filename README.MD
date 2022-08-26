@@ -19,9 +19,5 @@ Ultimately, to be integrated with the rest of Portico app.
 ### **Known bugs:**
 * crashes at the state update attempt
  
-#### **Author:**
-Piotr
-
-#### **Contributors:**
-Michał
-Bartek
+#### **The Crew:**
+Piotr (author), Michał, Bartek (contributors)
