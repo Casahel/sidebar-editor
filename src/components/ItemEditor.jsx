@@ -1,24 +1,24 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Formik } from 'formik';
+import { Formik, Form } from 'formik';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { makeStyles } from '@material-ui/core/styles';
 
 // MaterialUI config
-const useStyles = makeStyles( ( theme ) => ( {
+const useStyles = makeStyles((theme) => ({
     root: {
         width: '50vw',
         '& > *': {
-            margin: theme.spacing( 1 ),
+            margin: theme.spacing(1),
         }
     },
     heading: {
-        fontSize: theme.typography.pxToRem( 15 ),
+        fontSize: theme.typography.pxToRem(15),
         fontWeight: theme.typography.fontWeightRegular,
     },
-} ) );
+}));
 
 export default function ItemEditor () {
 
@@ -32,49 +32,52 @@ export default function ItemEditor () {
         'hasOrganization',
     ];
 
-    const [anchorEl, setAnchorEl] = React.useState( null );
-    const [selectedId, setSelectedId] = React.useState( 0 );
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [selectedId, setSelectedId] = React.useState(0);
 
-    const handleClickTextField = ( event ) => {
-        setAnchorEl( event.currentTarget );
+    const handleClickTextField = (event) => {
+        setAnchorEl(event.currentTarget);
     }
 
-    const handleMenuItemClick = ( event, id ) => {
-        setSelectedId( id );
-        setAnchorEl( null );
+    const handleMenuItemClick = (event, id) => {
+        setSelectedId(id);
+        setAnchorEl(null);
     }
 
     const handleClose = () => {
-        setAnchorEl( null );
+        setAnchorEl(null);
     }
     // MUI handling ends here
 
-    const item = useSelector( state => state.selectedNode )
+    const item = useSelector(state => state.selectedNode)
     const dispatch = useDispatch();
+    let actionType = '';
 
     return (
         <div className={classes.root}>
             <Formik
                 enableReinitialize={true}
-                initialValues={{
-                    id: item.id,
-                    name: item.name,
-                    nameFr: '',
-                    datatut: item.datatut,
-                    icons: item.icon,
-                    path: item.path,
-                    permissions: item.functionPermissions,
-                    env: item.env,
-                    auth: item.auth,
-                    noAuth: item.noauth,
-                }}
-                onSubmit={async ( values ) => {
-                    dispatch( { type: 'TREE_UPDATE_NODE', payload: values } );
+                initialValues={{ ...item }}
+                onSubmit={async (values) => {
+                    switch (actionType)
+                    {
+                        case "update":
+                            dispatch({ type: 'TREE/UPDATE_NODE', payload: values });
+                            break;
+                        case "add":
+                            dispatch({ type: 'TREE/ADD_NODE', payload: values });
+                            break;
+                        case "remove":
+                            dispatch({ type: 'TREE/REMOVE_NODE', payload: values });
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 }
             >
                 {props => (
-                    <form className={classes.root}
+                    <Form className={classes.root}
                         noValidate
                         autoComplete="off"
                         onSubmit={props.handleSubmit}
@@ -102,7 +105,7 @@ export default function ItemEditor () {
                             helperText=""
                         />
                         <TextField
-                            name="icons"
+                            name="icon"
                             variant="outlined"
                             label="Icon:"
                             value={props.values.icon || ''}
@@ -123,7 +126,7 @@ export default function ItemEditor () {
                             helperText=""
                         />
                         <TextField
-                            name="permissions"
+                            name="functionPermissions"
                             variant="outlined"
                             label="Custom Permission Functions:"
                             helperText="Click to select custom Permission Functions..."
@@ -136,18 +139,18 @@ export default function ItemEditor () {
                         <Menu
                             anchorEl={anchorEl}
                             keepMounted
-                            open={Boolean( anchorEl )}
+                            open={Boolean(anchorEl)}
                             onClose={handleClose}
                         >
-                            {options.map( ( option, id ) => (
+                            {options.map((option, id) => (
                                 <MenuItem
                                     key={option}
                                     selected={id === selectedId}
-                                    onClick={( event ) => handleMenuItemClick( event, id )}
+                                    onClick={(event) => handleMenuItemClick(event, id)}
                                 >
                                     {option}
                                 </MenuItem>
-                            ) )}
+                            ))}
                         </Menu>
                         <TextField
                             name="env"
@@ -163,10 +166,25 @@ export default function ItemEditor () {
                             value={props.values.noAuth || ''}
                             helperText=""
                         />
-                        <button name="change" type="submit">Update item</button>
-                        <button name="add" type="submit">Confirm changes</button>
+                        <button type="button"
+                            onClick={() => {
+                                actionType = 'update';
+                                props.handleSubmit();
+                            }}
+                        >Update item</button>
 
-                    </form>
+                        <button name="add" type="button"
+                            onClick={() => {
+                                actionType = 'add';
+                                props.handleSubmit();
+                            }}>Add item</button>
+
+                        <button name="remove" type="button"
+                            onClick={() => {
+                                actionType = 'remove';
+                                props.handleSubmit();
+                            }}>Remove item</button>
+                    </Form>
                 )}
             </Formik>
 
