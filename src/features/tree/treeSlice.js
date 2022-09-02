@@ -1,43 +1,52 @@
-const initialState = {
-    treeData: [
-    ]
-}
+import { v4 as uuidv4 } from 'uuid';
 
-export default function treeReducer ( state = initialState, action ) {
+const initialState = []
+
+export default function treeReducer (state = initialState, action) {
+
+    let i = null;
+    const findCurrentIndex = () => {
+        if (state) {
+            i = state.findIndex(entry => entry.id === action.payload.id); 
+        }
+    }
+
+    let entryUpdate = {};
+    const prepareUpdate = () => {
+        if (action.payload) {
+            entryUpdate = action.payload;
+        }
+    }
+
+    let newState = [];
+    const prepareNewState = () => {
+        if (state) {
+            newState = state.slice();
+        }
+    }
+
     switch ( action.type )
     {
-        case 'TREE_LOAD':
-            return {
-                ...state
-            }
-
-        case 'TREE_UPDATE_NODE':
-            let entryUpdate = {};
-            entryUpdate = action.payload;
-
-            console.log( 'Current state: ', JSON.stringify( ...state ) )
-            console.log( 'New item: ', JSON.stringify( entryUpdate ) );
-
-            const i = state.findIndex( entry => entry.id === action.payload.id );
-
-            console.log( 'Index to update: ', i );
-
-            let newState = [];
-
-            //make a deep copy of state
-            newState = state.slice();
-
-            console.log( 'New state (before update): ', JSON.stringify( newState ) );
-
-            //and then overwrite item at appropriate index
+        case 'TREE/UPDATE_NODE':
+            findCurrentIndex();
+            prepareUpdate();
+            prepareNewState();
             newState[i] = entryUpdate;
-            console.log( 'State after update: ', newState );
-
-            return {
-                ...state,
-                treeData: newState
-            }
-
+            return newState;
+        
+        case 'TREE/ADD_NODE':
+            prepareUpdate();
+            entryUpdate.id = uuidv4();
+            prepareNewState();
+            newState.push(entryUpdate);
+            return newState;
+        
+        case 'TREE/REMOVE_NODE':
+            findCurrentIndex();
+            prepareNewState();
+            newState.splice(i, 1);
+            return newState;
+        
         default:
             return state;
     }
