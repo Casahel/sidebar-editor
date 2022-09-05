@@ -3,23 +3,34 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import MUIDataTable from 'mui-datatables';
 
-
-const columns = [
-    { name: "Name", options: { filterOptions: { fullWidth: true } } },
-];
-
-const options = {
-    responsive: "standard",
-};
-  
-const data = [];
-
 const ItemTable = () => {
-    const dispatch = useDispatch();
     const configData = useSelector(state => state.treeData);
 
+    const dispatch = useDispatch();
+    
+    const columns = [
+        {
+            name: "ID",
+            options: { display: false, viewColumns: false, filter: false }
+        },
+        {
+            name: "Name",
+            options: { filterOptions: { fullWidth: true } }
+        },
+    ];
+    
+    const options = {
+    responsive: "standard",
+    onRowClick: (rowData, rowState) => {
+        alert(rowData);
+        alert(JSON.stringify(rowState))
+        }
+    };
+    
+    const data = [];
+
     configData.map((entry => {
-        data.push([entry.name]);
+        data.push([entry.id, entry.name]);
     }))
 
     //Item data table:
