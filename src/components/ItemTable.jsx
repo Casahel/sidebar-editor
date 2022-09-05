@@ -21,9 +21,13 @@ const ItemTable = () => {
     
     const options = {
     responsive: "standard",
-    onRowClick: (rowData, rowState) => {
-        alert(rowData);
-        alert(JSON.stringify(rowState))
+        onRowClick: (rowData) => {
+            configData.map(entry => {
+                const rowID = rowData[0];
+                if (entry.id === rowID) {
+                    dispatch({ type: 'NODE/LOAD_TO_EDITOR', payload: entry })
+                }
+            })
         }
     };
     
