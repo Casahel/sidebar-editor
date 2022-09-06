@@ -20,12 +20,21 @@ const ItemTable = () => {
     ];
     
     const options = {
-    responsive: "standard",
+        responsive: "standard",
         onRowClick: (rowData) => {
             configData.map(entry => {
                 const rowID = rowData[0];
                 if (entry.id === rowID) {
                     dispatch({ type: 'NODE/LOAD_TO_EDITOR', payload: entry })
+                }
+                if (entry.children)
+                {
+                    entry.children.map(subentry => {
+                        if (subentry.id === rowID)
+                        {
+                            dispatch({ type: 'NODE/LOAD_TO_EDITOR', payload: subentry})
+                        }
+                    })
                 }
             })
         }
@@ -35,6 +44,11 @@ const ItemTable = () => {
 
     configData.map((entry => {
         data.push([entry.id, entry.name]);
+        if (entry.children) {
+            entry.children.map(subentry => {
+                data.push([subentry.id, subentry.name])
+            })
+        }
     }))
 
     //Item data table:
