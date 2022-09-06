@@ -14,9 +14,18 @@ const ItemTable = () => {
             options: { display: false, viewColumns: false, filter: false }
         },
         {
-            name: "Name",
+            name: "Form title",
             options: { filterOptions: { fullWidth: true } }
         },
+        {
+            name: "Last modified date"
+        },
+        {
+            name: "Last modified by"
+        },
+        {
+            name: "Comments"
+        }
     ];
     
     const options = {
@@ -55,7 +64,8 @@ const ItemTable = () => {
     return (
         <>
             <MUIDataTable
-                title={"Sidebar categories"} data={data}
+                title={"Administration"}
+                data={data}
                 columns={columns}
                 options={options}
             />
