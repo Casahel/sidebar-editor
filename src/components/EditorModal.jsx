@@ -46,7 +46,7 @@ export default function EditorModal () {
     
     return (
         <div>
-            <Button onClick={handleOpen}>Open modal</Button>
+            <Button onClick={handleOpen}>Edit item</Button>
             <Modal
                 open={open}
                 onClose={handleClose}
