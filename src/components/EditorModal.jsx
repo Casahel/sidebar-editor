@@ -46,7 +46,7 @@ export default function EditorModal () {
     
     return (
         <div>
-            <Button onClick={handleOpen}>Edit item</Button>
+            <Button onClick={handleOpen}>Add item</Button>
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -57,4 +57,3 @@ export default function EditorModal () {
         </div>
     )
 };
-
