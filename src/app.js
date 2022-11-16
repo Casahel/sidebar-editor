@@ -1,15 +1,12 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import ItemTable from './components/ItemTable'
-import EditorModal from './components/EditorModal';
+import Datatable from './components/Datatable';
 
 const App = () => {
     return (
         <>
-            <EditorModal />
-                <ItemTable />
+            <Datatable/>
         </>
     )
-};
+}
 
 export default App;
